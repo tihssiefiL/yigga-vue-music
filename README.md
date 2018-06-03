@@ -1,6 +1,7 @@
 # music
 
-> A Vue.js project
+> A Vue.js project 
+DEMO --> http://www.lovesofun.top
 
 ## Build Setup
 
