@@ -68,7 +68,7 @@
     "jest": "^22.0.4",
     "jest-serializer-vue": "^0.3.0",
     "jquery": "^3.3.0",
-    "kind-of": "^6.0.2",
+    "kind-of": "^6.0.3",
     "less": "^2.7.3",
     "less-loader": "^4.0.5",
     "mime": "^2.2.0",
