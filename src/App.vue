@@ -1,7 +1,7 @@
 <template>
   <div id="app">
-    <div id="header"  @click="menu">
-    <div @testEvent='test'></div>
+    <div id="header" @click="menu">
+      <div @testEvent='test'></div>
       <SearchBar></SearchBar>
       <router-view></router-view>
     </div>
@@ -19,7 +19,7 @@ import SearchBar from './components/searchBar'
 import Search from './components/search'
 export default {
   name: 'app',
-  data () {
+  data() {
     return {
       menuShow: false
     }
@@ -57,48 +57,56 @@ export default {
 }
 </script>
 <style scoped>
-#player{
+#player {
   position: fixed;
   bottom: 0px;
 }
-#menuSelfCtrl{
+
+#menuSelfCtrl {
   height: 50px;
   width: 50px;
-  background-color:#000;
+  background-color: #000;
   position: absolute;
   right: 0px;
   top: 0px;
 }
-#app{
+
+#app {
   width: 100%;
   height: 100%;
   overflow: scroll;
 }
-#header{
+
+#header {
   color: red;
-  height: 50px;;
+  height: 50px;
+  ;
   width: 100%;
 }
-#menu{
+
+#menu {
   width: 260px;
   height: 100%;
-  background-color:rgb(134, 214, 194);
+  background-color: rgb(134, 214, 194);
   position: fixed;
   top: 0px;
   z-index: 300;
   left: -260px;
 }
-.menuShow{
-  transform:translateX(260px);
+
+.menuShow {
+  transform: translateX(260px);
   background-color: rgb(114, 106, 228);
   transition: 200ms;
 }
-.menuHide{
-  transform:translateX(0px);
+
+.menuHide {
+  transform: translateX(0px);
   transition: 200ms;
 }
-.init{
-  transform:translateX(0px);
+
+.init {
+  transform: translateX(0px);
   transition: 200ms;
 }
 </style>

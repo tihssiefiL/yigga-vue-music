@@ -77,8 +77,8 @@
           <div class="songName" @click.stop="listPlay">{{item.name}}</div>
           <div class="aboutListSong">
             <div v-if="0" class="listSongHighQuality">HQ</div>
-            <div class="listSongAr">{{item.artists[0].name}}-</div>
-            <div class="listSongAl">{{item.album.name}}</div>
+            <div class="listSongAr">{{item.ar[0].name}}-</div>
+            <div class="listSongAl">{{item.al.name}}</div>
           </div>
         </div>
         <div class="listSongMv" v-if="item.mvid != ' '">

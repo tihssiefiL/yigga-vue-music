@@ -8,27 +8,35 @@
       <swiper-slide><img class="cd" src="../../../static/img/5.png" alt=""></swiper-slide>
       <div class="swiper-pagination" slot="pagination"></div>
     </swiper>
-      <div class="options">
-      <span><img src="../../../static/img/option1.gif" alt=""><p>私人FM</p></span>
-      <span><img src="../../../static/img/option2.gif" alt=""><p>每日推荐</p></span>
-      <span><img src="../../../static/img/option3.gif" alt=""><p>歌单</p></span>
-      <span><img src="../../../static/img/option4.gif" alt=""><p>排行榜</p></span>
+    <div class="options">
+      <span><img src="../../../static/img/option1.gif" alt="">
+        <p>私人FM</p>
+      </span>
+      <span><img src="../../../static/img/option2.gif" alt="">
+        <p>每日推荐</p>
+      </span>
+      <span><img src="../../../static/img/option3.gif" alt="">
+        <p>歌单</p>
+      </span>
+      <span><img src="../../../static/img/option4.gif" alt="">
+        <p>排行榜</p>
+      </span>
     </div>
     <hr>
-      <div>
-        <div class="listWarp">
-          <span style="font-size:1rem;line-height:1rem;">推荐歌单</span>
-          <img class="arrow" src="../../../static/img/arrows_right.png" alt="" srcset="">
-          <div id="list">
-          <div class="list" v-for="(item,key) in recommendedList" :key="item.key" @click="selectList">
+    <div>
+      <div class="listWarp">
+        <span style="font-size:1rem;line-height:1rem;">推荐歌单</span>
+        <img class="arrow" src="../../../static/img/arrows_right.png" alt="" srcset="">
+        <div id="list">
+          <div class="list" v-for="(item, key) in recommendedList" :key="item.key" @click="selectList">
             <img class="listImg" :src="item.bgImg">
-            <div class="lisyKey" v-if="0">{{key}}</div>
-            <div class="listId" v-show='0'>{{item.id}}</div>
-            <div class="listName">{{item.name}}</div>
+            <div class="lisyKey" v-if="0">{{ key }}</div>
+            <div class="listId" v-show='0'>{{ item.id }}</div>
+            <div class="listName">{{ item.name }}</div>
           </div>
         </div>
       </div>
-        </div>
+    </div>
     <hr>
   </div>
 </template>
@@ -37,6 +45,8 @@ import Vue from 'vue'
 import 'swiper/dist/css/swiper.css'
 import { swiper, swiperSlide } from 'vue-awesome-swiper'
 import axios from 'axios'
+const api = 'https://api.ezcomezgo.com/music'
+
 export default {
   methods: {
     selectList: function (e) {
@@ -60,13 +70,16 @@ export default {
       Vue.prototype.showList()
     },
     getList: function (id) {
-      let url = 'http://123.206.26.156:3000/playlist/detail?id=' + id
+      let url = api + '/playlist/detail?id=' + id
       axios.get(url)
         .then((data) => {
-          let listData = data.data.result
+          let listData = data.data.playlist
+          // console.log(data)
           this.$store.state.selectedList.adType = listData.adType
-          this.$store.state.selectedList.anonimous = listData.anonimous
-          this.$store.state.selectedList.artists = listData.artists
+          // this.$store.state.selectedList.anonimous = listData.anonimous
+          // this.$store.state.selectedList.artists = listData.artists
+
+
           this.$store.state.selectedList.cloudTrackCount = listData.cloudTrackCount
           this.$store.state.selectedList.commentCount = listData.commentCount
           this.$store.state.selectedList.coverImgUrl = listData.coverImgUrl
@@ -82,9 +95,13 @@ export default {
           this.$store.state.selectedList.trackNumberUpdateTime = listData.trackNumberUpdateTime
           this.$store.state.selectedList.trackUpdateTime = listData.trackUpdateTime
           this.$store.state.selectedList.tracks = listData.tracks
-          this.$store.state.selectedList.updateDate = listData.updateDate
+          this.$store.state.selectedList.updateDate = listData.updateTime
+
+
           // console.log(this.$store.state.selectedList)
           // console.log(listData)
+        }).catch(err => {
+          console.log(err)
         })
     }
   },
@@ -92,7 +109,7 @@ export default {
     swiper,
     swiperSlide
   },
-  data () {
+  data() {
     return {
       swiperOption: {
         autoplay: true,
@@ -118,13 +135,13 @@ export default {
     }
   },
   computed: {
-    swiper () {
+    swiper() {
       return this.$refs.mySwiper.swiper
     }
   },
-  mounted () {
+  mounted() {
     this.swiper.slideTo(0, 0, false)
-    axios.get('http://123.206.26.156:3000/personalized')
+    axios.get(api + '/personalized')
       .then(data => {
         this.$store.state.recommendedListNum = 6
         this.$store.state.recommendedList = []
@@ -169,32 +186,39 @@ export default {
 }
 </script>
 <style scoped>
-.listWarp{
+.listWarp {
   overflow: hidden;
 }
-#discover{
+
+#discover {
   /* margin-top: 50px; */
   padding-bottom: 50px;
 }
-*{
+
+* {
   color: #000000;
 }
-.cd{
+
+.cd {
   width: 100%;
   height: auto;
 }
-.cd img{
+
+.cd img {
   width: 100%;
 }
-.options{
-  display:flex;
+
+.options {
+  display: flex;
   justify-content: space-around;
   align-items: center;
   margin: 0px;
   padding: 0px;
   height: 70px;
-  width: 100%;background-color:#f1f5f6;
+  width: 100%;
+  background-color: #f1f5f6;
 }
+
 .options span {
   display: flex;
   height: 50px;
@@ -202,10 +226,11 @@ export default {
   flex-wrap: nowrap;
   flex-direction: column;
   align-items: center;
-  justify-content:center;
-  background-color:#f1f5f6;
+  justify-content: center;
+  background-color: #f1f5f6;
 }
-.options span p{
+
+.options span p {
   margin-top: 5px;
   margin-bottom: 0px;
   padding: 0px;
@@ -214,33 +239,40 @@ export default {
   color: black;
   font-size: 10px;
 }
-img{
-width: 100%;
+
+img {
+  width: 100%;
 }
-hr{
+
+hr {
   opacity: 0.2;
 }
-#list{
+
+#list {
   display: flex;
   flex-wrap: wrap;
 }
-.list{
+
+.list {
   width: 33.333333%;
   height: 100%;
   display: flex;
   flex-direction: column;
 }
-.list img{
+
+.list img {
   width: 100%;
 }
-.listName{
+
+.listName {
   display: flex;
   justify-content: center;
   align-items: center;
   font-size: 12px;
   transform: scale(0.8)
 }
-.arrow{
+
+.arrow {
   height: 1rem;
   width: 1rem;
 }

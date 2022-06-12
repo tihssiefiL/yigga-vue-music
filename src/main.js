@@ -5,11 +5,13 @@ import store from './store'
 import List from './components/list'
 import { search, getSong, getMv, mvPlay, getLyrics } from '../static/js/ajax.js'
 import axios from 'axios'
-import AlloyFinger from 'alloyfinger'
-import AlloyFingerPlugin from 'alloyfinger/vue/alloy_finger.vue'
-Vue.use(AlloyFingerPlugin, {
-  AlloyFinger
-})
+// import AlloyFinger from 'alloyfinger'
+// import AlloyFingerPlugin from 'alloyfinger/vue/alloy_finger.vue'
+const api = 'https://api.ezcomezgo.com/music'
+
+// Vue.use(AlloyFingerPlugin, {
+//   AlloyFinger
+// })
 Vue.component('List', List)
 new Vue({// eslint-disable-line no-new
   el: '#app',
@@ -32,7 +34,7 @@ Vue.prototype.showList = function () {
   document.getElementById('lists').style.transform = 'translateX(0%)'
 }
 Vue.prototype.getSongDetail = function (id) {
-  let url = 'http://123.206.26.156:3000/song/detail?ids=' + id
+  let url = api + '/song/detail?ids=' + id
   axios.get(url)
     .then((data) => {
       store.state.player.playingSongName = data.data.songs[0].name
@@ -47,7 +49,7 @@ Vue.prototype.getSongDetail = function (id) {
     })
 }
 Vue.prototype.getSongUrl = function (id) {
-  let url = 'http://123.206.26.156:3000/music/url?id=' + id
+  let url = api + '/song/url?id=' + id
   axios.get(url)
     .then((data) => {
       store.state.player.playingSongUrl = data.data.data[0].url
@@ -57,7 +59,7 @@ Vue.prototype.getSongUrl = function (id) {
     })
 }
 Vue.prototype.search = function (keyWord, offset = 0, limit = 10) {
-  let url = 'http://123.206.26.156:3000/search?&keywords=' + keyWord + '&offset=' + offset + '&limit=' + limit
+  let url = api + '/search?&keywords=' + keyWord + '&offset=' + offset + '&limit=' + limit
   axios.get(url)
     .then((data) => {
       for (let i = 0; i < limit; i++) {
@@ -71,7 +73,7 @@ Vue.prototype.search = function (keyWord, offset = 0, limit = 10) {
   store.state.searchOffset = store.state.searchOffset + limit
 }
 Vue.prototype.getLyrics = function (id) {
-  let url = 'http://123.206.26.156:3000/lyric?id=' + id
+  let url = api + '/lyric?id=' + id
   axios.get(url)
     .then((data) => {
       store.state.player.playingSongLyric = data.data.lrc.lyric.split('\n')

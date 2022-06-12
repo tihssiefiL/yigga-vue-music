@@ -59,5 +59,5 @@ export default new Router({
       component: Search
     }
   ],
-  mode: 'history'
+  mode: 'hash'
 })
